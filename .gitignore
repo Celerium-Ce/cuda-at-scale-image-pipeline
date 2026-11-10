@@ -1,0 +1,9 @@
+bin/obj/
+bin/batch_edge_detect
+bin/*.o
+*.o
+
+data/output/*
+!data/output/.gitkeep
+
+logs/*.log
