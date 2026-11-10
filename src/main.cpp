@@ -1,3 +1,5 @@
+// Copyright 2026 Celerium-Ce
+//
 // CUDA at Scale Independent Project.
 //
 // Batch image-processing pipeline: for every grayscale PGM image in an
@@ -16,8 +18,12 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include <cuda_runtime.h>
+#include <npp.h>
+
 #include <algorithm>
 #include <chrono>
+#include <cstdint>
 #include <cstdlib>
 #include <cstring>
 #include <fstream>
@@ -25,13 +31,10 @@
 #include <string>
 #include <vector>
 
-#include <cuda_runtime.h>
-#include <npp.h>
-
-#include "cuda_utils.h"
-#include "npp_filters.cuh"
-#include "pgm_io.h"
-#include "sobel.cuh"
+#include "include/cuda_utils.h"
+#include "include/npp_filters.cuh"
+#include "include/pgm_io.h"
+#include "include/sobel.cuh"
 
 namespace {
 
@@ -40,7 +43,7 @@ struct Args {
   std::string output_dir = "data/output";
   std::string log_file = "logs/run.log";
   int num_streams = 4;
-  long limit = -1;  // -1 means "process every image found".
+  int64_t limit = -1;  // -1 means "process every image found".
 };
 
 void PrintUsage(const char* prog_name) {
@@ -76,7 +79,7 @@ bool ParseArgs(int argc, char** argv, Args* args) {
     } else if (arg == "--streams") {
       args->num_streams = std::stoi(NextValue("--streams"));
     } else if (arg == "--limit") {
-      args->limit = std::stol(NextValue("--limit"));
+      args->limit = static_cast<int64_t>(std::stoll(NextValue("--limit")));
     } else if (arg == "-h" || arg == "--help") {
       PrintUsage(argv[0]);
       std::exit(EXIT_SUCCESS);
@@ -131,7 +134,7 @@ bool HasSuffix(const std::string& s, const std::string& suffix) {
 }
 
 std::vector<std::string> CollectInputFiles(const std::string& input_dir,
-                                            long limit) {
+                                            int64_t limit) {
   std::vector<std::string> files;
   DIR* dir = opendir(input_dir.c_str());
   if (dir == nullptr) {
@@ -146,7 +149,7 @@ std::vector<std::string> CollectInputFiles(const std::string& input_dir,
   }
   closedir(dir);
   std::sort(files.begin(), files.end());
-  if (limit >= 0 && static_cast<long>(files.size()) > limit) {
+  if (limit >= 0 && static_cast<int64_t>(files.size()) > limit) {
     files.resize(limit);
   }
   return files;
@@ -274,7 +277,7 @@ int main(int argc, char** argv) {
   }
 
   const auto batch_start = std::chrono::high_resolution_clock::now();
-  long ok_count = 0;
+  int64_t ok_count = 0;
   double total_gpu_ms = 0.0;
 
   for (size_t idx = 0; idx < files.size(); ++idx) {
@@ -317,6 +320,6 @@ int main(int argc, char** argv) {
              std::to_string(ok_count / (wall_ms / 1000.0)) + " images/sec");
   }
 
-  return (ok_count == static_cast<long>(files.size())) ? EXIT_SUCCESS
+  return (ok_count == static_cast<int64_t>(files.size())) ? EXIT_SUCCESS
                                                           : EXIT_FAILURE;
 }

@@ -1,8 +1,9 @@
-#include "sobel.cuh"
+// Copyright 2026 Celerium-Ce
+#include "include/sobel.cuh"
 
 #include <cmath>
 
-#include "cuda_utils.h"
+#include "include/cuda_utils.h"
 
 namespace {
 

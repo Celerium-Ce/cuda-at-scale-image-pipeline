@@ -1,6 +1,7 @@
-#include "npp_filters.cuh"
+// Copyright 2026 Celerium-Ce
+#include "include/npp_filters.cuh"
 
-#include "cuda_utils.h"
+#include "include/cuda_utils.h"
 
 void ApplyGaussianBlurNpp(const Npp8u* d_in, int in_step, Npp8u* d_out,
                            int out_step, int width, int height,

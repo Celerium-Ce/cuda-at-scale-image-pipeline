@@ -1,5 +1,6 @@
-#ifndef CUDA_AT_SCALE_INCLUDE_PGM_IO_H_
-#define CUDA_AT_SCALE_INCLUDE_PGM_IO_H_
+// Copyright 2026 Celerium-Ce
+#ifndef INCLUDE_PGM_IO_H_
+#define INCLUDE_PGM_IO_H_
 
 #include <string>
 #include <vector>
@@ -20,4 +21,4 @@ bool ReadPgm(const std::string& path, Image* image);
 // logs a message to stderr if the file cannot be written.
 bool WritePgm(const std::string& path, const Image& image);
 
-#endif  // CUDA_AT_SCALE_INCLUDE_PGM_IO_H_
+#endif  // INCLUDE_PGM_IO_H_

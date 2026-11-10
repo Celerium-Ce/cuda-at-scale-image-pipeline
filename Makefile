@@ -19,7 +19,6 @@ NVCC      ?= nvcc
 
 TARGET    := bin/batch_edge_detect
 SRC_DIR   := src
-INC_DIR   := include
 OBJ_DIR   := bin/obj
 
 CPP_SRCS  := $(wildcard $(SRC_DIR)/*.cpp)
@@ -27,7 +26,9 @@ CU_SRCS   := $(wildcard $(SRC_DIR)/*.cu)
 OBJS      := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(CPP_SRCS)) \
              $(patsubst $(SRC_DIR)/%.cu,$(OBJ_DIR)/%.o,$(CU_SRCS))
 
-NVCCFLAGS := -std=c++17 -O2 -I$(INC_DIR)
+# -I. lets "include/foo.h" in src/*.cpp|cu resolve from the project root
+# (Google C++ Style Guide: include paths mirror the directory layout).
+NVCCFLAGS := -std=c++17 -O2 -I.
 LDFLAGS   := -lnppc -lnppif -lnppisu -lcudart
 
 # Covers Maxwell (sm_52) through Ampere (sm_86); adjust for newer/older GPUs.

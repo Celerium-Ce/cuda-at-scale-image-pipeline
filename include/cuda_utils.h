@@ -1,11 +1,12 @@
-#ifndef CUDA_AT_SCALE_INCLUDE_CUDA_UTILS_H_
-#define CUDA_AT_SCALE_INCLUDE_CUDA_UTILS_H_
-
-#include <cstdio>
-#include <cstdlib>
+// Copyright 2026 Celerium-Ce
+#ifndef INCLUDE_CUDA_UTILS_H_
+#define INCLUDE_CUDA_UTILS_H_
 
 #include <cuda_runtime.h>
 #include <npp.h>
+
+#include <cstdio>
+#include <cstdlib>
 
 // Aborts with a message identifying the call site if a CUDA runtime call
 // fails. Used at every CUDA API call site so failures are caught close to
@@ -31,4 +32,4 @@
     }                                                                    \
   } while (0)
 
-#endif  // CUDA_AT_SCALE_INCLUDE_CUDA_UTILS_H_
+#endif  // INCLUDE_CUDA_UTILS_H_

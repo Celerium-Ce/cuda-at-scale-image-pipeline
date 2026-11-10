@@ -1,5 +1,6 @@
-#ifndef CUDA_AT_SCALE_INCLUDE_SOBEL_CUH_
-#define CUDA_AT_SCALE_INCLUDE_SOBEL_CUH_
+// Copyright 2026 Celerium-Ce
+#ifndef INCLUDE_SOBEL_CUH_
+#define INCLUDE_SOBEL_CUH_
 
 #include <cuda_runtime.h>
 
@@ -12,4 +13,4 @@
 void LaunchSobelKernel(const unsigned char* d_in, unsigned char* d_out,
                         int width, int height, cudaStream_t stream);
 
-#endif  // CUDA_AT_SCALE_INCLUDE_SOBEL_CUH_
+#endif  // INCLUDE_SOBEL_CUH_

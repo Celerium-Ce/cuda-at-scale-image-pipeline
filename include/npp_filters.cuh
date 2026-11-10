@@ -1,5 +1,6 @@
-#ifndef CUDA_AT_SCALE_INCLUDE_NPP_FILTERS_CUH_
-#define CUDA_AT_SCALE_INCLUDE_NPP_FILTERS_CUH_
+// Copyright 2026 Celerium-Ce
+#ifndef INCLUDE_NPP_FILTERS_CUH_
+#define INCLUDE_NPP_FILTERS_CUH_
 
 #include <npp.h>
 
@@ -13,4 +14,4 @@ void ApplyGaussianBlurNpp(const Npp8u* d_in, int in_step, Npp8u* d_out,
                            int out_step, int width, int height,
                            NppStreamContext ctx);
 
-#endif  // CUDA_AT_SCALE_INCLUDE_NPP_FILTERS_CUH_
+#endif  // INCLUDE_NPP_FILTERS_CUH_
