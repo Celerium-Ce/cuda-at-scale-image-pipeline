@@ -148,16 +148,19 @@ A run populates:
   processing time in milliseconds and which stream it ran on, and a
   summary with total images processed, wall-clock time, and throughput.
 
-**Toolchain note:** this repository was authored and the dataset was
-generated on a Windows machine with no CUDA Toolkit (`nvcc`) installed, so
-the CUDA/NPP code could not be compiled or executed there, and no
-`logs/run*.log` or `data/output/*.pgm` are committed yet. The machine does
-have an NVIDIA GPU (driver reports CUDA 13.1 support) but lacks the
-toolkit itself. The code targets a standard CUDA 10.1+ Linux environment
-(matching the Coursera lab image). To produce real proof-of-execution
-artifacts, build and run this project on a machine with `nvcc` available
-— the Coursera CUDA lab terminal, or any cloud GPU instance with the CUDA
-Toolkit installed — with:
+Both are committed to this repository from a real run: `logs/run_20261110_133657.log`
+shows the program built and ran on an **NVIDIA L4** GPU in the Coursera
+CUDA lab, processing all 200/200 images in `data/input/` successfully
+(6.4s wall-clock, ~31 images/sec), and `data/output/` holds the 200
+resulting edge-detected PGMs from that run.
+
+**Toolchain note:** this repository was authored on a Windows machine
+with no CUDA Toolkit (`nvcc`) installed (it has an NVIDIA GPU, but lacks
+the toolkit), so the code itself could not be built there. It was instead
+built and run on a standard CUDA 10.1+ Linux environment — the Coursera
+lab terminal — which produced the committed `logs/` and `data/output/`
+artifacts above. To reproduce, build and run this project on any machine
+with `nvcc` available:
 
 ```bash
 make
